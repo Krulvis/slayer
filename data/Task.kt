@@ -34,5 +34,6 @@ interface Task {
  * @param name should be parsable from konar given task
  * @param centerTile center tile of the killing floor where script should walk to
  * @param radius radius from center tile in which monsters can be killed
+ * @param safeSpot optional safespot if possible for this location
  */
-data class Location(val name: String, val centerTile: Tile, val radius: Int = 10)
+data class Location(val name: String, val centerTile: Tile, val radius: Int = 10, val safeSpot: Tile = Tile.Nil)

@@ -1,8 +1,11 @@
-package org.powbot.krulvis.slayer.data
+package org.powbot.opensource.slayer.task
 
 import org.powbot.api.Tile
+import org.powbot.api.requirement.ItemRequirement
+import org.powbot.api.requirement.Requirement
 import org.powbot.api.rt4.Npc
 import org.powbot.api.rt4.Npcs
+import org.powbot.mobile.script.ScriptManager
 
 /**
  * Since Konar specifies a location where the monster needs to be killed
@@ -40,11 +43,14 @@ enum class Master(val tile: Tile) {
     }
 }
 
-enum class SlayerTask(
+/**
+ * enum class with possible targets and their requirements + locations
+ */
+enum class SlayerTarget(
     /**
      * Npc names that fit the task
      */
-    val names: List<String>,
+    val names: Array<String>,
 
     /**
      * Optimal style to kill the monster with
@@ -57,47 +63,57 @@ enum class SlayerTask(
      * List of locations where this monster can be killed
      * Multiple is only really needed for Konar tasks
      */
-    vararg val locations: Location
+    vararg val locations: Location,
+
+    /**
+     * Requirements necessary for the task (items, equippables)
+     */
+    val requirements: List<Requirement> = emptyList<ItemRequirement>()
 ) {
     ABERRANT_SPECTRES(
-        listOf("Aberrant spectre"),
+        arrayOf("Aberrant spectre"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
         Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(-1, -1, -1))
     ),
     ABYSSAL_DEMONS(
-        listOf("Abyssal demon"),
+        arrayOf("Abyssal demon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.ABYSS, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1))
     ),
     ADAMANT_DRAGONS(
-        listOf("Adamant dragon"),
+        arrayOf("Adamant dragon"),
         CombatStyle.Melee,
         Location(Dungeon.LITHKREN_VAULT, Tile(-1, -1, -1))
     ),
     ANKOU(
-        listOf("Ankou"),
+        arrayOf("Ankou"),
         CombatStyle.Melee,
         Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(-1, -1, -1)),
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1))
     ),
     AVIANSIE(
-        listOf("Aviansie"),
+        arrayOf("Aviansie"),
         CombatStyle.Ranged,
         Location(Dungeon.GOD_WARS_DUNGEON, Tile(-1, -1, -1))
     ),
     BASILISK(
-        listOf("Basilisk"),
+        arrayOf("Basilisk"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.JORMUNGAND_PRISON, Tile(-1, -1, -1))
     ),
+    BEARS(
+        arrayOf("Grizzly bear"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(2699, 3331, 0))
+    ),
     BLACK_DEMONS(
-        listOf("Black demon"),
+        arrayOf("Black demon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
@@ -105,7 +121,7 @@ enum class SlayerTask(
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     BLACK_DRAGONS(
-        listOf("Black dragon"),
+        arrayOf("Black dragon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
@@ -113,7 +129,7 @@ enum class SlayerTask(
         Location(Dungeon.TAVERLY_DUNGEON, Tile(-1, -1, -1)),
     ),
     BLOODVELD(
-        listOf("Bloodveld"),
+        arrayOf("Bloodveld"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.GOD_WARS_DUNGEON, Tile(-1, -1, -1)),
@@ -123,7 +139,7 @@ enum class SlayerTask(
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
     BLUE_DRAGONS(
-        listOf("Blue dragon"),
+        arrayOf("Blue dragon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
@@ -132,23 +148,23 @@ enum class SlayerTask(
         Location(Dungeon.TAVERLY_DUNGEON, Tile(-1, -1, -1)),
     ),
     BRINE_RATS(
-        listOf("Brine rat"),
+        arrayOf("Brine rat"),
         CombatStyle.Melee,
         Location(Dungeon.BRINE_RAT_CAVERN, Tile(-1, -1, -1)),
     ),
     BRONZE_DRAGON(
-        listOf("Bronze dragon"),
+        arrayOf("Bronze dragon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     CAVE_KRAKEN(
-        listOf("Cave kraken"),
+        arrayOf("Cave kraken"),
         CombatStyle.Magic,
         Location(Dungeon.KRAKEN_COVE, Tile(-1, -1, -1)),
     ),
     DAGANNOTH(
-        listOf("Dagannoth"),
+        arrayOf("Dagannoth"),
         CombatStyle.Ranged,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.LIGHTHOUSE, Tile(-1, -1, -1)),
@@ -156,24 +172,24 @@ enum class SlayerTask(
         Location(Dungeon.JORMUNGAND_PRISON, Tile(-1, -1, -1)),
     ),
     DARK_BEASTS(
-        listOf("Dark beast"),
+        arrayOf("Dark beast"),
         CombatStyle.Melee,
         Location(Dungeon.MOURNER_TUNNELS, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
     ),
     DRAKES(
-        listOf("Drake"),
+        arrayOf("Drake"),
         CombatStyle.Melee,
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
     DUST_DEVILS(
-        listOf("Dust devil"),
+        arrayOf("Dust devil"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.SMOKE_DUNGEON, Tile(-1, -1, -1)),
     ),
     FIRE_GIANTS(
-        listOf("Fire giant"),
+        arrayOf("Fire giant"),
         CombatStyle.Melee,
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
@@ -184,17 +200,17 @@ enum class SlayerTask(
         Location(Dungeon.WATERFALL_DUNGEON, Tile(-1, -1, -1)),
     ),
     FOSSIL_ISLAND_WYVERNS(
-        listOf("Wyvern"),
+        arrayOf("Wyvern"),
         CombatStyle.Ranged,
         Location(Dungeon.WYVERN_CAVE, Tile(-1, -1, -1)),
     ),
     GARGOYLES(
-        listOf("Gargoyle"),
+        arrayOf("Gargoyle"),
         CombatStyle.Ranged,
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
     ),
     GREATER_DEMONS(
-        listOf("Greater demon"),
+        arrayOf("Greater demon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
@@ -203,7 +219,7 @@ enum class SlayerTask(
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     HELLHOUNDS(
-        listOf("Hellhound"),
+        arrayOf("Hellhound"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
@@ -212,37 +228,37 @@ enum class SlayerTask(
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     HYDRAS(
-        listOf("Hydra"),
+        arrayOf("Hydra"),
         CombatStyle.Melee,
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
     IRON_DRAGONS(
-        listOf("Iron dragon"),
+        arrayOf("Iron dragon"),
         CombatStyle.Melee,
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
     ),
     JELLIES(
-        listOf("Jelly"),
+        arrayOf("Jelly"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
     ),
     KALPHITE(
-        listOf("Jelly"),
+        arrayOf("Jelly"),
         CombatStyle.Melee,
         Location(Dungeon.KALPHITE_CAVE, Tile(-1, -1, -1)),
         Location(Dungeon.KALPHITE_LAIR, Tile(-1, -1, -1)),
     ),
     KURASKS(
-        listOf("Kurask"),
+        arrayOf("Kurask"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
     ),
     LIZARDMEN(
-        listOf("Lizardman"),
+        arrayOf("Lizardman"),
         CombatStyle.Melee,
         Location(Dungeon.BATTLEFRONT, Tile(-1, -1, -1)),
         Location(Dungeon.LIZARDMAN_CANYON, Tile(-1, -1, -1)),
@@ -250,26 +266,32 @@ enum class SlayerTask(
         Location(Dungeon.KEBOS_SWAMP, Tile(-1, -1, -1)),
         Location(Dungeon.MOLCH, Tile(-1, -1, -1)),
     ),
+    LIZARDS(
+        arrayOf("Desert lizard", "Lizard"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(-1, -1, -1)),
+        requirements = listOf(ItemRequirement(ICE_COOLER, 1, ItemRequirement.ItemRequirementType.INVENTORY))
+    ),
     MITHRIL_DRAGONS(
-        listOf("Mithril dragon"),
+        arrayOf("Mithril dragon"),
         CombatStyle.Melee,
         Location(Dungeon.ANCIENT_CAVERN, Tile(-1, -1, -1)),
     ),
     MUTATED_ZYGOMITES(
-        listOf("Mutated zygomite"),
+        arrayOf("Mutated zygomite"),
         CombatStyle.Melee,
         Location(Dungeon.FOSSIL_ISLAND, Tile(-1, -1, -1)),
         Location(Dungeon.ZANARIS, Tile(-1, -1, -1)),
     ),
     NECHRYAEL(
-        listOf("Nechryael"),
+        arrayOf("Nechryael"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
     ),
     RED_DRAGONS(
-        listOf("Red dragon"),
+        arrayOf("Red dragon"),
         CombatStyle.Melee,
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
@@ -277,58 +299,79 @@ enum class SlayerTask(
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
     ),
     RUNE_DRAGONS(
-        listOf("Rune dragon"),
+        arrayOf("Rune dragon"),
         CombatStyle.Melee,
         Location(Dungeon.LITHKREN_VAULT, Tile(-1, -1, -1)),
     ),
     SKELETAL_WYVERNS(
-        listOf("Skeletal wyvern"),
+        arrayOf("Skeletal wyvern"),
         CombatStyle.Melee,
         Location(Dungeon.ASGARNIAN_ICE_DUNGEON, Tile(-1, -1, -1)),
     ),
     SMOKE_DEVILS(
-        listOf("Smoke devil"),
+        arrayOf("Smoke devil"),
         CombatStyle.Melee,
         Location(Dungeon.SMOKE_DEVIL_DUNGEON, Tile(-1, -1, -1)),
     ),
     STEEL_DRAGONS(
-        listOf("Steel dragon"),
+        arrayOf("Steel dragon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     TROLLS(
-        listOf("Troll"),
+        arrayOf("Troll"),
         CombatStyle.Melee,
         Location(Dungeon.TROLL_STRONGHOLD, Tile(-1, -1, -1)),
         Location(Dungeon.DEATH_PLATEAU, Tile(-1, -1, -1)),
         Location(Dungeon.MOUNT_QUIDAMORTEN, Tile(-1, -1, -1)),
     ),
     TUROTH(
-        listOf("Turoth"),
+        arrayOf("Turoth"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
     VAMPYRE(
-        listOf("Vampyre"),
+        arrayOf("Vampyre"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.MEIYERDITCH, Tile(-1, -1, -1)),
         Location(Dungeon.SLEPE, Tile(-1, -1, -1)),
     ),
     WATERFIENDS(
-        listOf("Vampyre"),
+        arrayOf("Vampyre"),
         CombatStyle.Melee,
         Location(Dungeon.ANCIENT_CAVERN, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.KRAKEN_COVE, Tile(-1, -1, -1)),
     ),
     WYRMS(
-        listOf("Wyrm"),
+        arrayOf("Wyrm"),
         CombatStyle.Melee,
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
+    ),
+    ZOMBIE(
+        arrayOf("Zombie"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(3225, 9906, 0)),//Varrock sewers
     );
+
+    fun location(locationText: String): Location {
+        val text = locationText.replace(" ", "_")
+        val parsedLocation = locations.firstOrNull { it.dungeon.name.equals(text, true) }
+        if (parsedLocation == null) {
+            ScriptManager.script()?.log?.info("Couldn't parse location: $text")
+            return locations.first()
+        }
+        return parsedLocation
+    }
+
+    companion object {
+        fun forName(name: String): SlayerTarget? {
+            return values().firstOrNull { it.name.equals(name, true) }
+        }
+    }
 }
 
 enum class Dungeon {
@@ -380,5 +423,9 @@ enum class Dungeon {
     WATERFALL_DUNGEON,
     WYVERN_CAVE,
     ZANARIS,
+    NIL
     ;
 }
+
+val ENCHANTED_GEM = 4155
+val ICE_COOLER = 6696

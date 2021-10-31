@@ -14,7 +14,6 @@ import org.powbot.opensource.slayer.task.Master
 import org.powbot.opensource.slayer.task.SlayerTarget
 import org.powbot.opensource.slayer.task.SlayerTask
 import org.powbot.opensource.slayer.tree.branch.HasTask
-import java.lang.NullPointerException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -38,7 +37,7 @@ import java.util.regex.Pattern
             name = "Inventory",
             description = "What should the inventory look like before heading out?",
             optionType = OptionType.INVENTORY,
-            defaultValue = "{\"1929\":1,\"4155\":1,\"379\":7}"
+            defaultValue = "{\"4155\":1,\"379\":15}"
         ),
         ScriptConfiguration(
             name = "Food",
@@ -53,9 +52,6 @@ class Slayer : TreeScript() {
     val master: Master by lazy { Master.valueOf(getOption<String>("Slayer Master")!!) }
     val food: String by lazy { getOption<String>("Food")!! }
     val inventory: Map<Int, Int> by lazy { getOption<Map<Int, Int>>("Inventory")!! }
-
-    private val NPC_CURRENT_MESSAGE: Pattern =
-        Pattern.compile("^You're (?:still(?: meant to be)?|currently assigned to) (?:hunting|bringing balance to|kill|bring balance to|slaying) (?<name>.+?)(?: (?:in|on|south of) (?:the )?(?<location>.+))?(?:, with|; (?:you have|only)) (?<amount>\\d+)(?: more)? to go\\..*")
 
     //Widget info
     val WIDGET_ID = 231
@@ -152,5 +148,5 @@ class Slayer : TreeScript() {
 }
 
 fun main() {
-    Slayer().startScript(false)
+    Slayer().startScript("localhost", "GIM", false)
 }

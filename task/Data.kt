@@ -17,6 +17,11 @@ import org.powbot.mobile.script.ScriptManager
  */
 data class Location(val dungeon: Dungeon, val centerTile: Tile, val radius: Int = 10, val safeSpot: Tile = Tile.Nil)
 
+/**
+ * Item requirement we can use to use on the npc to kill them
+ */
+class KillItemRequirement(id: Int, amount: Int) : ItemRequirement(id, amount, ItemRequirementType.INVENTORY)
+
 enum class CombatStyle {
     Melee, Magic, Ranged
 }
@@ -267,10 +272,14 @@ enum class SlayerTarget(
         Location(Dungeon.MOLCH, Tile(-1, -1, -1)),
     ),
     LIZARDS(
-        arrayOf("Desert lizard", "Lizard"),
+        arrayOf("Desert lizard", "Lizard", "Small lizard"),
         CombatStyle.Melee,
-        Location(Dungeon.NIL, Tile(-1, -1, -1)),
-        requirements = listOf(ItemRequirement(ICE_COOLER, 1, ItemRequirement.ItemRequirementType.INVENTORY))
+        Location(Dungeon.NIL, Tile(3415, 3033, 0)),
+        requirements = listOf(
+            ItemRequirement(WATERSKINS, 1, ItemRequirement.ItemRequirementType.INVENTORY),
+            KillItemRequirement(ICE_COOLER, 1),
+            ItemRequirement(COINS, 1, ItemRequirement.ItemRequirementType.INVENTORY)
+        )
     ),
     MITHRIL_DRAGONS(
         arrayOf("Mithril dragon"),
@@ -429,3 +438,7 @@ enum class Dungeon {
 
 val ENCHANTED_GEM = 4155
 val ICE_COOLER = 6696
+val COINS = 995
+val WATERSKINS = intArrayOf(1823, 1825, 1827, 1829)
+val EMPTY_WATERSKIN = 1831
+val SHANTAY_PASS = 1854

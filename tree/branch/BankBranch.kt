@@ -9,7 +9,7 @@ import org.powbot.opensource.slayer.tree.leaf.HandleBank
 import org.powbot.opensource.slayer.tree.leaf.OpenBank
 
 class ShouldBank(script: Slayer) : Branch<Slayer>(script, "Should Bank?") {
-    override val failedComponent: TreeComponent<Slayer> = Killing(script)
+    override val failedComponent: TreeComponent<Slayer> = ShouldEat(script)
     override val successComponent: TreeComponent<Slayer> = ShouldOpenBank(script)
 
     override fun validate(): Boolean {

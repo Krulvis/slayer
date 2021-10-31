@@ -1,15 +1,38 @@
 package org.powbot.opensource.slayer.tree.branch
 
 import org.powbot.api.Condition
-import org.powbot.api.rt4.Actor
-import org.powbot.api.rt4.Movement
-import org.powbot.api.rt4.Npc
-import org.powbot.api.rt4.Players
+import org.powbot.api.rt4.*
 import org.powbot.api.rt4.walking.local.Utils
 import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.SimpleLeaf
 import org.powbot.api.script.tree.TreeComponent
 import org.powbot.opensource.slayer.Slayer
+import org.powbot.opensource.slayer.task.KillItemRequirement
+import org.powbot.opensource.slayer.task.SlayerTarget
+
+class ShouldUseItem(script: Slayer) : Branch<Slayer>(script, "Should use item?") {
+    override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Using item") {
+        val killItem = script.currentTask!!.target.requirements.first { it is KillItemRequirement }
+        Utils.walkAndInteract(
+            Players.local().interacting(),
+            "Use",
+            false,
+            true,
+            (killItem as KillItemRequirement).ids[0]
+        )
+    }
+    override val failedComponent: TreeComponent<Slayer> = Killing(script)
+
+    var target: Npc? = null
+
+    override fun validate(): Boolean {
+        if (script.currentTask!!.target.requirements.none { it is KillItemRequirement })
+            return false
+        val interacting = Players.local().interacting()
+        val percent = interacting.healthPercent()
+        return interacting != Actor.Nil && percent <= 1
+    }
+}
 
 class Killing(script: Slayer) : Branch<Slayer>(script, "Killing?") {
     override val failedComponent: TreeComponent<Slayer> = NearTarget(script)
@@ -25,6 +48,7 @@ class Killing(script: Slayer) : Branch<Slayer>(script, "Killing?") {
     companion object {
         fun killing(): Boolean {
             val interacting = Players.local().interacting()
+//            val percent = interacting.healthPercent()
             return interacting != Actor.Nil && (!interacting.healthBarVisible() || interacting.healthPercent() > 0)
         }
     }

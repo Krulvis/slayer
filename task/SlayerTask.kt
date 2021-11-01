@@ -11,5 +11,6 @@ class SlayerTask(val target: SlayerTarget, val amount: Int, val location: Locati
     fun target(): Npc? =
         Npcs.stream().name(*target.names).filtered { !it.healthBarVisible() || it.healthPercent() > 0 }
             .reachable()
+            .nearest()
             .firstOrNull()
 }

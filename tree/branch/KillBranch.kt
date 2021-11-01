@@ -12,21 +12,25 @@ import org.powbot.opensource.slayer.task.SlayerTarget
 
 class ShouldUseItem(script: Slayer) : Branch<Slayer>(script, "Should use item?") {
     override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Using item") {
-        val killItem = script.currentTask!!.target.requirements.first { it is KillItemRequirement }
-        Utils.walkAndInteract(
-            Players.local().interacting(),
-            "Use",
-            false,
-            true,
-            (killItem as KillItemRequirement).ids[0]
-        )
+        val killItem = script.currentTask!!.target.killItem()
+        val currentXp = Skills.experience(Constants.SKILLS_SLAYER)
+        if (Utils.walkAndInteract(
+                Players.local().interacting(),
+                "Use",
+                false,
+                true,
+                killItem!!.ids[0]
+            )
+        ) {
+            Condition.wait({ Skills.experience(Constants.SKILLS_SLAYER) > currentXp }, 250, 10)
+        }
     }
     override val failedComponent: TreeComponent<Slayer> = Killing(script)
 
     var target: Npc? = null
 
     override fun validate(): Boolean {
-        if (script.currentTask!!.target.requirements.none { it is KillItemRequirement })
+        if (script.currentTask!!.target.killItem() == null)
             return false
         val interacting = Players.local().interacting()
         val percent = interacting.healthPercent()
@@ -42,14 +46,17 @@ class Killing(script: Slayer) : Branch<Slayer>(script, "Killing?") {
     }
 
     override fun validate(): Boolean {
-        return killing()
+        return killing(script.currentTask!!.target)
     }
 
     companion object {
-        fun killing(): Boolean {
+        fun killing(target: SlayerTarget): Boolean {
             val interacting = Players.local().interacting()
-//            val percent = interacting.healthPercent()
-            return interacting != Actor.Nil && (!interacting.healthBarVisible() || interacting.healthPercent() > 0)
+            if (interacting == Actor.Nil) return false
+
+            val hasKillItem = target.killItem() != null
+
+            return interacting.healthBarVisible() && (hasKillItem || interacting.healthPercent() > 0)
         }
     }
 }
@@ -57,7 +64,7 @@ class Killing(script: Slayer) : Branch<Slayer>(script, "Killing?") {
 class NearTarget(script: Slayer) : Branch<Slayer>(script, "Near target?") {
     override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Attacking") {
         if (Utils.walkAndInteract(target, "Attack")) {
-            Condition.wait({ Killing.killing() }, 250, 15)
+            Condition.wait({ Killing.killing(script.currentTask!!.target) }, 250, 15)
         }
     }
     override val failedComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Walking to spot") {

@@ -376,6 +376,9 @@ enum class SlayerTarget(
         return parsedLocation
     }
 
+    fun killItem(): KillItemRequirement? =
+        requirements.firstOrNull { it is KillItemRequirement } as KillItemRequirement?
+
     companion object {
         fun forName(name: String): SlayerTarget? {
             return values().firstOrNull { it.name.equals(name, true) }

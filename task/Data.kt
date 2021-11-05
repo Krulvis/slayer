@@ -71,11 +71,6 @@ enum class SlayerTarget(
     vararg val locations: Location,
 
     /**
-     * Safespot from which the monsters can be killed
-     */
-    val safeSpot: Tile = Tile.Nil,
-
-    /**
      * Requirements necessary for the task (items, equippables)
      */
     val requirements: List<Requirement> = emptyList<ItemRequirement>()
@@ -308,6 +303,11 @@ enum class SlayerTarget(
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
+    ),
+    OGRES(
+        arrayOf("Ogre"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(2509, 3111, 0), safeSpot = Tile(2509, 3111, 0)),
     ),
     RED_DRAGONS(
         arrayOf("Red dragon"),

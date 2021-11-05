@@ -21,6 +21,7 @@ class GetTask(script: Slayer) : Leaf<Slayer>(script, "Getting task") {
         Pattern.compile("^You're (?:still(?: meant to be)?|currently assigned to) (?:hunting|bringing balance to|kill|bring balance to|slaying) (?<name>.+?)(?: (?:in|on|south of) (?:the )?(?<location>.+))?(?:, with|; (?:you have|only)) (?<amount>\\d+)(?: more)? to go\\..*")
 
     override fun execute() {
+        script.currentTask = null
         val widget = script.widget()
         if (!widget.valid()) {
             val masterTile = script.master.tile

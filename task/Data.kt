@@ -71,6 +71,11 @@ enum class SlayerTarget(
     vararg val locations: Location,
 
     /**
+     * Safespot from which the monsters can be killed
+     */
+    val safeSpot: Tile = Tile.Nil,
+
+    /**
      * Requirements necessary for the task (items, equippables)
      */
     val requirements: List<Requirement> = emptyList<ItemRequirement>()
@@ -204,6 +209,11 @@ enum class SlayerTarget(
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.WATERFALL_DUNGEON, Tile(-1, -1, -1)),
     ),
+    FLESHCRAWLERS(
+        arrayOf("Fleshcrawler"),
+        CombatStyle.Melee,
+
+        ),
     FOSSIL_ISLAND_WYVERNS(
         arrayOf("Wyvern"),
         CombatStyle.Ranged,

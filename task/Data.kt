@@ -219,6 +219,11 @@ enum class SlayerTarget(
         CombatStyle.Ranged,
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
     ),
+    GHOULS(
+        arrayOf("Ghoul"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(3429, 3462, 0))
+    ),
     GREATER_DEMONS(
         arrayOf("Greater demon"),
         CombatStyle.Melee,

@@ -3,6 +3,8 @@ package org.powbot.opensource.slayer.task
 import org.powbot.api.Tile
 import org.powbot.api.requirement.ItemRequirement
 import org.powbot.api.requirement.Requirement
+import org.powbot.api.rt4.Equipment
+import org.powbot.api.rt4.Inventory
 import org.powbot.api.rt4.Npc
 import org.powbot.api.rt4.Npcs
 import org.powbot.mobile.script.ScriptManager
@@ -21,6 +23,11 @@ data class Location(val dungeon: Dungeon, val centerTile: Tile, val radius: Int 
  * Item requirement we can use to use on the npc to kill them
  */
 class KillItemRequirement(id: Int, amount: Int) : ItemRequirement(id, amount, ItemRequirementType.INVENTORY)
+class LightRequirement : Requirement {
+    override fun meets(): Boolean {
+        return Inventory.stream().id(*LIGHTS).isNotEmpty() || Equipment.stream().id(*LIGHTS).isNotEmpty()
+    }
+}
 
 enum class CombatStyle {
     Melee, Magic, Ranged
@@ -167,6 +174,11 @@ enum class SlayerTarget(
         arrayOf("Cave kraken"),
         CombatStyle.Magic,
         Location(Dungeon.KRAKEN_COVE, Tile(-1, -1, -1)),
+    ),
+    CAVE_BUG(
+        arrayOf("Cave bug"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(3188, 9557, 0)),
     ),
     DAGANNOTH(
         arrayOf("Dagannoth"),
@@ -322,6 +334,15 @@ enum class SlayerTarget(
         Location(Dungeon.FORTHOS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
     ),
+    ROCKSLUGS(
+        arrayOf("Rockslug"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(3224, 9577, 0)),
+        requirements = listOf(
+            KillItemRequirement(SALT, 1),
+            LightRequirement()
+        )
+    ),
     RUNE_DRAGONS(
         arrayOf("Rune dragon"),
         CombatStyle.Melee,
@@ -456,7 +477,9 @@ enum class Dungeon {
 
 val ENCHANTED_GEM = 4155
 val ICE_COOLER = 6696
+val SALT = 4161
 val COINS = 995
 val WATERSKINS = intArrayOf(1823, 1825, 1827, 1829)
 val EMPTY_WATERSKIN = 1831
 val SHANTAY_PASS = 1854
+val LIGHTS = intArrayOf(-1)

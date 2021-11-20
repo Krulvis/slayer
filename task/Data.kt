@@ -42,6 +42,7 @@ enum class Master(val tile: Tile) {
     CHAELDAR(Tile(-1, -1, -1)),
     KONAR(Tile(-1, -1, -1)),
     NIEVE(Tile(-1, -1, -1)),
+    STEVE(Tile(-1, -1, -1)),
     DURADEL(Tile(-1, -1, -1)),
     ;
 

@@ -164,7 +164,7 @@ enum class SlayerTarget(
     BRINE_RATS(
         arrayOf("Brine rat"),
         CombatStyle.Melee,
-        Location(Dungeon.BRINE_RAT_CAVERN, Tile(-1, -1, -1)),
+        Location(Dungeon.BRINE_RAT_CAVERN, Tile(2713, 10144, 0)),
     ),
     BRONZE_DRAGON(
         arrayOf("Bronze dragon"),
@@ -175,7 +175,7 @@ enum class SlayerTarget(
     CAVE_KRAKEN(
         arrayOf("Cave kraken"),
         CombatStyle.Magic,
-        Location(Dungeon.KRAKEN_COVE, Tile(-1, -1, -1)),
+        Location(Dungeon.KRAKEN_COVE, Tile(2273, 9998, 0)),
     ),
     CAVE_BUG(
         arrayOf("Cave bug"),
@@ -187,7 +187,7 @@ enum class SlayerTarget(
         CombatStyle.Ranged,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1650, 10095, 0)),
         Location(Dungeon.LIGHTHOUSE, Tile(-1, -1, -1)),
-        Location(Dungeon.WATERBIRTH_ISLAND, Tile(-1, -1, -1)),
+        Location(Dungeon.WATERBIRTH_ISLAND, Tile(2482, 10152, 0)),
         Location(Dungeon.JORMUNGAND_PRISON, Tile(-1, -1, -1)),
     ),
     DARK_BEASTS(
@@ -222,7 +222,7 @@ enum class SlayerTarget(
     FLESHCRAWLERS(
         arrayOf("Fleshcrawler"),
         CombatStyle.Melee,
-
+        Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(1992, 5237, 0)),
         ),
     FOSSIL_ISLAND_WYVERNS(
         arrayOf("Wyvern"),
@@ -232,7 +232,7 @@ enum class SlayerTarget(
     GARGOYLES(
         arrayOf("Gargoyle"),
         CombatStyle.Ranged,
-        Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
+        Location(Dungeon.SLAYER_TOWER, Tile(3441, 3545, 2)),
     ),
     GHOULS(
         arrayOf("Ghoul"),
@@ -285,7 +285,7 @@ enum class SlayerTarget(
     KURASKS(
         arrayOf("Kurask"),
         CombatStyle.Melee,
-        Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
+        Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(2702, 9998, 0)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
     ),
     LIZARDMEN(
@@ -378,7 +378,7 @@ enum class SlayerTarget(
     TUROTH(
         arrayOf("Turoth"),
         CombatStyle.Melee,
-        Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
+        Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(2723, 10003, 0)),
     ),
     VAMPYRE(
         arrayOf("Vampyre"),

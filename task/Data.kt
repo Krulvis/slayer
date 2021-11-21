@@ -34,16 +34,16 @@ enum class CombatStyle {
 }
 
 enum class Master(val tile: Tile) {
-    TURAEL(Tile(-1, -1, -1)),
-    SPRIA(Tile(-1, -1, -1)),
-    KRYSTILIA(Tile(-1, -1, -1)),
+    TURAEL(Tile(2931, 3536, 0)),
+    SPRIA(Tile(3091, 3267, 0)),
+    KRYSTILIA(Tile(3109, 3516, 0)),
     MAZCHNA(Tile(3510, 3507, 0)),
-    VANNAKA(Tile(-1, -1, -1)),
-    CHAELDAR(Tile(-1, -1, -1)),
-    KONAR(Tile(-1, -1, -1)),
-    NIEVE(Tile(-1, -1, -1)),
-    STEVE(Tile(-1, -1, -1)),
-    DURADEL(Tile(-1, -1, -1)),
+    VANNAKA(Tile(3145, 9914, 0)),
+    CHAELDAR(Tile(2444, 4431, 0)),
+    KONAR(Tile(1308, 3786, 0)),
+    NIEVE(Tile(2432, 3423, 0)),
+    STEVE(Tile(2432, 3423, 0)),
+    DURADEL(Tile(2869, 2982, 1)),
     ;
 
     fun master(): Npc? = Npcs.stream().name(name).firstOrNull()
@@ -86,14 +86,13 @@ enum class SlayerTarget(
     ABERRANT_SPECTRES(
         arrayOf("Aberrant spectre"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
-        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(-1, -1, -1))
+        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2459, 9778, 0))
     ),
     ABYSSAL_DEMONS(
         arrayOf("Abyssal demon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1675, 10096, 0)),
         Location(Dungeon.ABYSS, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1))
     ),
@@ -107,7 +106,8 @@ enum class SlayerTarget(
         CombatStyle.Melee,
         Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(-1, -1, -1)),
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1))
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1641, 9995, 0)),
+        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2478, 9800, 0)),
     ),
     AVIANSIE(
         arrayOf("Aviansie"),
@@ -128,7 +128,7 @@ enum class SlayerTarget(
     BLACK_DEMONS(
         arrayOf("Black demon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1720, 10084, 0)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
         Location(Dungeon.TAVERLY_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
@@ -136,7 +136,7 @@ enum class SlayerTarget(
     BLACK_DRAGONS(
         arrayOf("Black dragon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1616, 10095, 0)),
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.EVIL_CHICKENS_LAIR, Tile(-1, -1, -1)),
         Location(Dungeon.TAVERLY_DUNGEON, Tile(-1, -1, -1)),
@@ -144,17 +144,18 @@ enum class SlayerTarget(
     BLOODVELD(
         arrayOf("Bloodveld"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1679, 10075, 0)),
         Location(Dungeon.GOD_WARS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.MEIYERDITCH_LABORATORIES, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
+        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2447, 9820, 0)),
     ),
     BLUE_DRAGONS(
         arrayOf("Blue dragon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1633, 10075, 0)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.OGRE_ENCLAVE, Tile(-1, -1, -1)),
@@ -168,7 +169,7 @@ enum class SlayerTarget(
     BRONZE_DRAGON(
         arrayOf("Bronze dragon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1650, 10095, 0)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     CAVE_KRAKEN(
@@ -184,7 +185,7 @@ enum class SlayerTarget(
     DAGANNOTH(
         arrayOf("Dagannoth"),
         CombatStyle.Ranged,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1650, 10095, 0)),
         Location(Dungeon.LIGHTHOUSE, Tile(-1, -1, -1)),
         Location(Dungeon.WATERBIRTH_ISLAND, Tile(-1, -1, -1)),
         Location(Dungeon.JORMUNGAND_PRISON, Tile(-1, -1, -1)),
@@ -203,19 +204,20 @@ enum class SlayerTarget(
     DUST_DEVILS(
         arrayOf("Dust devil"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1714, 10032, 0)),
         Location(Dungeon.SMOKE_DUNGEON, Tile(-1, -1, -1)),
     ),
     FIRE_GIANTS(
         arrayOf("Fire giant"),
         CombatStyle.Melee,
-        Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(2656, 9491, 0)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1624, 10042, 0)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.GIANTS_DEN, Tile(-1, -1, -1)),
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.WATERFALL_DUNGEON, Tile(-1, -1, -1)),
+        Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(2401, 9779, 0)),
+        Location(Dungeon.WATERFALL_DUNGEON, Tile(2564, 9887, 0)),
+        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2400, 9778, 0)),
     ),
     FLESHCRAWLERS(
         arrayOf("Fleshcrawler"),
@@ -240,7 +242,7 @@ enum class SlayerTarget(
     GREATER_DEMONS(
         arrayOf("Greater demon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1685, 10085, 0)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
@@ -249,7 +251,8 @@ enum class SlayerTarget(
     HELLHOUNDS(
         arrayOf("Hellhound"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2413, 9800, 0)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1644, 10064, 0)),
         Location(Dungeon.CHASM_OF_FIRE, Tile(-1, -1, -1)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
@@ -261,17 +264,17 @@ enum class SlayerTarget(
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
     IRON_DRAGONS(
-        arrayOf("Iron dragon"),
+        arrayOf("Iron dragons"),
         CombatStyle.Melee,
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1662, 10085, 0)),
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
     ),
     JELLIES(
         arrayOf("Jelly"),
         CombatStyle.Melee,
         Location(Dungeon.FREMENNIK_SLAYER_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1688, 9999, 0)),
     ),
     KALPHITE(
         arrayOf("Jelly"),
@@ -318,7 +321,7 @@ enum class SlayerTarget(
     NECHRYAEL(
         arrayOf("Nechryael"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1693, 10080, 0)),
         Location(Dungeon.IORWERTH_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
     ),
@@ -331,7 +334,7 @@ enum class SlayerTarget(
         arrayOf("Red dragon"),
         CombatStyle.Melee,
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1614, 10076, 0)),
         Location(Dungeon.FORTHOS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.MYTHS_GUILD_DUNGEON, Tile(-1, -1, -1)),
     ),
@@ -362,7 +365,7 @@ enum class SlayerTarget(
     STEEL_DRAGONS(
         arrayOf("Steel dragon"),
         CombatStyle.Melee,
-        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(-1, -1, -1)),
+        Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1608, 10054, 0)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     TROLLS(
@@ -418,6 +421,8 @@ enum class SlayerTarget(
 
     companion object {
         fun forName(name: String): SlayerTarget? {
+            val name2 =  values().firstOrNull { it.name.equals(name, true)}
+            System.out.println(name2.toString())
             return values().firstOrNull { it.name.equals(name, true) }
         }
     }

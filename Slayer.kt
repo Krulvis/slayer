@@ -29,7 +29,7 @@ import java.util.regex.Pattern
         ScriptConfiguration(
             name = "Slayer Master",
             //Fuck "KRYSTILIA" for now
-            allowedValues = ["TURAEL", "SPRIA", "MAZCHNA", "VANNAKA", "CHAELDAR", "KONAR", "NIEVE", "DURADEL"],
+            allowedValues = ["TURAEL", "SPRIA", "MAZCHNA", "VANNAKA", "CHAELDAR", "KONAR", "NIEVE", "STEVE", "DURADEL"],
             description = "What slayer master do you want to use?",
             defaultValue = "MAZCHNA"
         ),
@@ -75,7 +75,7 @@ class Slayer : TreeScript() {
     private val CHAT_BRACELET_EXPEDITIOUS = "Your expeditious bracelet helps you progress your"
     private val COMBAT_BRACELET_TASK_UPDATE_MESSAGE =
         Pattern.compile("^You still need to kill (\\d+) monsters to complete your current Slayer assignment")
-
+ 
     @com.google.common.eventbus.Subscribe
     fun messageReceived(msg: MessageEvent) {
         val txt = msg.message.sanitizeMultilineText()

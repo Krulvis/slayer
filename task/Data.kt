@@ -86,15 +86,15 @@ enum class SlayerTarget(
     ABERRANT_SPECTRES(
         arrayOf("Aberrant spectre"),
         CombatStyle.Melee,
-        Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1)),
+        Location(Dungeon.SLAYER_TOWER, Tile(3415, 3548, 1)),
         Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2459, 9778, 0))
     ),
     ABYSSAL_DEMONS(
         arrayOf("Abyssal demon"),
         CombatStyle.Melee,
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1675, 10096, 0)),
-        Location(Dungeon.ABYSS, Tile(-1, -1, -1)),
-        Location(Dungeon.SLAYER_TOWER, Tile(-1, -1, -1))
+        Location(Dungeon.ABYSS, Tile(3020, 4816, 0)),
+        Location(Dungeon.SLAYER_TOWER, Tile(3418, 3565, 2))
     ),
     ADAMANT_DRAGONS(
         arrayOf("Adamant dragon"),
@@ -104,7 +104,7 @@ enum class SlayerTarget(
     ANKOU(
         arrayOf("Ankou"),
         CombatStyle.Melee,
-        Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(-1, -1, -1)),
+        Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(2326, 5199, 0)),
         Location(Dungeon.STRONGHOLD_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1641, 9995, 0)),
         Location(Dungeon.STRONGHOLD_SLAYER_CAVE, Tile(2478, 9800, 0)),

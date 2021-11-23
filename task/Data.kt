@@ -22,7 +22,7 @@ data class Location(val dungeon: Dungeon, val centerTile: Tile, val radius: Int 
 /**
  * Item requirement we can use to use on the npc to kill them
  */
-class KillItemRequirement(id: Int, amount: Int) : ItemRequirement(id, amount, ItemRequirementType.INVENTORY)
+class KillItemRequirement(id: Int) : ItemRequirement(id, 1, ItemRequirementType.INVENTORY)
 class LightRequirement : Requirement {
     override fun meets(): Boolean {
         return Inventory.stream().id(*LIGHTS).isNotEmpty() || Equipment.stream().id(*LIGHTS).isNotEmpty()
@@ -263,6 +263,11 @@ enum class SlayerTarget(
         CombatStyle.Melee,
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
     ),
+    ICE_WARRIORS(
+        arrayOf("Ice Warrior"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(-1, -1, -1)),
+    ),
     IRON_DRAGONS(
         arrayOf("Iron dragons"),
         CombatStyle.Melee,
@@ -303,7 +308,7 @@ enum class SlayerTarget(
         Location(Dungeon.NIL, Tile(3415, 3033, 0)),
         requirements = listOf(
             ItemRequirement(WATERSKINS, 1, ItemRequirement.ItemRequirementType.INVENTORY),
-            KillItemRequirement(ICE_COOLER, 1),
+            KillItemRequirement(ICE_COOLER),
             ItemRequirement(COINS, 1, ItemRequirement.ItemRequirementType.INVENTORY)
         )
     ),
@@ -343,7 +348,7 @@ enum class SlayerTarget(
         CombatStyle.Melee,
         Location(Dungeon.NIL, Tile(3224, 9577, 0)),
         requirements = listOf(
-            KillItemRequirement(SALT, 1),
+            KillItemRequirement(SALT),
             LightRequirement()
         )
     ),

@@ -8,10 +8,7 @@ import org.powbot.api.script.tree.Leaf
 import org.powbot.mobile.rscache.loader.ItemLoader
 import org.powbot.mobile.script.ScriptManager
 import org.powbot.opensource.slayer.Slayer
-import org.powbot.opensource.slayer.task.COINS
-import org.powbot.opensource.slayer.task.ICE_COOLER
-import org.powbot.opensource.slayer.task.SHANTAY_PASS
-import org.powbot.opensource.slayer.task.WATERSKINS
+import org.powbot.opensource.slayer.task.*
 
 class HandleBank(script: Slayer) : Leaf<Slayer>(script, "Banking") {
 
@@ -22,8 +19,7 @@ class HandleBank(script: Slayer) : Leaf<Slayer>(script, "Banking") {
         }
         requirements.filter { it is ItemRequirement }.forEach {
             val req = (it as ItemRequirement)
-            val amount = when {
-                (ICE_COOLER in req.ids) -> Slayer.taskRemainder() + 10
+            val amount = if (it is KillItemRequirement) Slayer.taskRemainder() + 10 else when {
                 (WATERSKINS.contentEquals(req.ids)) -> 5
                 (COINS in req.ids) -> 2000
                 else -> req.amount

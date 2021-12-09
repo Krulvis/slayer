@@ -282,9 +282,9 @@ enum class SlayerTarget(
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1688, 9999, 0)),
     ),
     KALPHITE(
-        arrayOf("Jelly"),
+        arrayOf("Kalphite Worker"),
         CombatStyle.Melee,
-        Location(Dungeon.KALPHITE_CAVE, Tile(-1, -1, -1)),
+        Location(Dungeon.KALPHITE_CAVE, Tile(3324, 9503, 0)),
         Location(Dungeon.KALPHITE_LAIR, Tile(-1, -1, -1)),
     ),
     KURASKS(

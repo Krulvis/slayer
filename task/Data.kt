@@ -23,6 +23,7 @@ data class Location(val dungeon: Dungeon, val centerTile: Tile, val radius: Int 
  * Item requirement we can use to use on the npc to kill them
  */
 class KillItemRequirement(id: Int) : ItemRequirement(id, 1, ItemRequirementType.INVENTORY)
+class SpawnItemRequirement(id: Int) : ItemRequirement(id, 1, ItemRequirementType.INVENTORY)
 class LightRequirement : Requirement {
     override fun meets(): Boolean {
         return Inventory.stream().id(*LIGHTS).isNotEmpty() || Equipment.stream().id(*LIGHTS).isNotEmpty()
@@ -177,7 +178,7 @@ enum class SlayerTarget(
         CombatStyle.Magic,
         Location(Dungeon.KRAKEN_COVE, Tile(2273, 9998, 0)),
     ),
-    CAVE_BUG(
+    CAVE_BUGS(
         arrayOf("Cave bug"),
         CombatStyle.Melee,
         Location(Dungeon.NIL, Tile(3188, 9557, 0)),
@@ -207,6 +208,11 @@ enum class SlayerTarget(
         Location(Dungeon.CATACOMBS_OF_KOUREND, Tile(1714, 10032, 0)),
         Location(Dungeon.SMOKE_DUNGEON, Tile(-1, -1, -1)),
     ),
+    EARTH_WARRIORS(
+        arrayOf("Earth warrior"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(3120, 9987, 0)),
+    ),
     FIRE_GIANTS(
         arrayOf("Fire giant"),
         CombatStyle.Melee,
@@ -223,7 +229,7 @@ enum class SlayerTarget(
         arrayOf("Fleshcrawler"),
         CombatStyle.Melee,
         Location(Dungeon.STRONGHOLD_OF_SECURITY, Tile(1992, 5237, 0)),
-        ),
+    ),
     FOSSIL_ISLAND_WYVERNS(
         arrayOf("Wyvern"),
         CombatStyle.Ranged,
@@ -247,6 +253,14 @@ enum class SlayerTarget(
         Location(Dungeon.ISLE_OF_SOULS_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.KARUULM_SLAYER_DUNGEON, Tile(-1, -1, -1)),
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
+    ),
+    HARPIE_BUG_SWARMS(
+        arrayOf("Harpie bug swarm"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(2871, 3110, 0)),
+        requirements = listOf(
+            ItemRequirement(LIT_BUG_LANTERN, 1, ItemRequirement.ItemRequirementType.EQUIPMENT),
+        )
     ),
     HELLHOUNDS(
         arrayOf("Hellhound"),
@@ -317,6 +331,14 @@ enum class SlayerTarget(
         CombatStyle.Melee,
         Location(Dungeon.ANCIENT_CAVERN, Tile(-1, -1, -1)),
     ),
+    MOGRES(
+        arrayOf("Mogre"),
+        CombatStyle.Melee,
+        Location(Dungeon.NIL, Tile(2996, 3111, 0)),
+        requirements = listOf(
+            SpawnItemRequirement(FISHING_EXPLOSIVE)
+        )
+    ),
     MUTATED_ZYGOMITES(
         arrayOf("Mutated zygomite"),
         CombatStyle.Melee,
@@ -374,10 +396,10 @@ enum class SlayerTarget(
         Location(Dungeon.BRIMHAVEN_DUNGEON, Tile(-1, -1, -1)),
     ),
     TROLLS(
-        arrayOf("Troll"),
+        arrayOf("Mountain troll"),
         CombatStyle.Melee,
+        Location(Dungeon.DEATH_PLATEAU, Tile(2869, 3588, 0)),
         Location(Dungeon.TROLL_STRONGHOLD, Tile(-1, -1, -1)),
-        Location(Dungeon.DEATH_PLATEAU, Tile(-1, -1, -1)),
         Location(Dungeon.MOUNT_QUIDAMORTEN, Tile(-1, -1, -1)),
     ),
     TUROTH(
@@ -424,11 +446,13 @@ enum class SlayerTarget(
     fun killItem(): KillItemRequirement? =
         requirements.firstOrNull { it is KillItemRequirement } as KillItemRequirement?
 
+    fun spawnItem(): SpawnItemRequirement? =
+        requirements.firstOrNull { it is SpawnItemRequirement } as SpawnItemRequirement?
+
     companion object {
         fun forName(name: String): SlayerTarget? {
-            val name2 =  values().firstOrNull { it.name.equals(name, true)}
-            System.out.println(name2.toString())
-            return values().firstOrNull { it.name.equals(name, true) }
+            val n = name.replace(" ", "_")
+            return values().firstOrNull { it.name.equals(n, true) }
         }
     }
 }
@@ -491,6 +515,8 @@ val ICE_COOLER = 6696
 val SALT = 4161
 val COINS = 995
 val WATERSKINS = intArrayOf(1823, 1825, 1827, 1829)
+val LIT_BUG_LANTERN = 7053
+val FISHING_EXPLOSIVE = 6664
 val EMPTY_WATERSKIN = 1831
 val SHANTAY_PASS = 1854
 val LIGHTS = intArrayOf(-1)

@@ -31,7 +31,7 @@ import java.util.regex.Pattern
             //Fuck "KRYSTILIA" for now
             allowedValues = ["TURAEL", "SPRIA", "MAZCHNA", "VANNAKA", "CHAELDAR", "KONAR", "NIEVE", "STEVE", "DURADEL"],
             description = "What slayer master do you want to use?",
-            defaultValue = "MAZCHNA"
+            defaultValue = "VANNAKA"
         ),
         ScriptConfiguration(
             name = "Inventory",

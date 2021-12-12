@@ -7,10 +7,11 @@ import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.SimpleLeaf
 import org.powbot.api.script.tree.TreeComponent
 import org.powbot.opensource.slayer.Slayer
+import org.powbot.opensource.slayer.task.FISHING_EXPLOSIVE
 import org.powbot.opensource.slayer.task.KillItemRequirement
 import org.powbot.opensource.slayer.task.SlayerTarget
 
-class ShouldUseItem(script: Slayer) : Branch<Slayer>(script, "Should use item?") {
+class ShouldUseKillItem(script: Slayer) : Branch<Slayer>(script, "Should use item?") {
     override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Using item") {
         val killItem = script.currentTask!!.target.killItem()
         val currentXp = Skills.experience(Constants.SKILLS_SLAYER)
@@ -67,9 +68,7 @@ class NearTarget(script: Slayer) : Branch<Slayer>(script, "Near target?") {
             Condition.wait({ Killing.killing(script.currentTask!!.target) }, 250, 15)
         }
     }
-    override val failedComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Walking to spot") {
-        Movement.walkTo(script.currentTask!!.location.centerTile)
-    }
+    override val failedComponent: TreeComponent<Slayer> = ShouldSpawnTarget(script)
 
     var target: Npc? = null
 
@@ -77,6 +76,25 @@ class NearTarget(script: Slayer) : Branch<Slayer>(script, "Near target?") {
         target = script.currentTask!!.target()
         return target != null
     }
+}
 
+class ShouldSpawnTarget(script: Slayer) : Branch<Slayer>(script, "Should spawn target?") {
+    override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Spawning") {
+        val spawnItem = script.currentTask!!.target.spawnItem()!!
+        when (spawnItem.ids[0]) {
+            FISHING_EXPLOSIVE -> {
+                val spot = Objects.stream().name("Ominous Fishing Spot").nearest().firstOrNull()
+                if (spot != null && Utils.walkAndInteract(spot, "Use", false, true, FISHING_EXPLOSIVE)) {
+                    Condition.wait({ script.currentTask!!.target() != null }, 250, 20)
+                }
+            }
+        }
+    }
+    override val failedComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Walking to spot") {
+        Movement.walkTo(script.currentTask!!.location.centerTile)
+    }
 
+    override fun validate(): Boolean {
+        return script.currentTask!!.target.spawnItem() != null
+    }
 }

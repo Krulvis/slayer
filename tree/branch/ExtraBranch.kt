@@ -11,7 +11,7 @@ import org.powbot.api.script.tree.TreeComponent
 import org.powbot.opensource.slayer.Slayer
 
 class ShouldEat(script: Slayer) : Branch<Slayer>(script, "Should eat?") {
-    override val failedComponent: TreeComponent<Slayer> = ShouldUseItem(script)
+    override val failedComponent: TreeComponent<Slayer> = ShouldUseKillItem(script)
     override val successComponent: TreeComponent<Slayer> = SimpleLeaf(script, "Eating") {
         val food = Inventory.stream().name(script.food).firstOrNull()
         val action = food?.actions()?.get(0) ?: "eat"
